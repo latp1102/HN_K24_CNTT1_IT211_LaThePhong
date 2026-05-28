@@ -15,19 +15,19 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getAll(@PathVariable Long id) {
+    public ResponseEntity<?> getAll(@PathVariable Long id) {
         return productService.getAll(id);
     }
     @PostMapping
-    public ResponseEntity<Product> addProduct(@Valid @RequestBody CreateProductDTO createProductDTO) {
+    public ResponseEntity<?> addProduct(@Valid @RequestBody CreateProductDTO createProductDTO) {
         return productService.addProduct(createProductDTO);
     }
     @PatchMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@Valid @RequestBody UpdateProductDTO updateProductDTO, @PathVariable Long id) {
+    public ResponseEntity<?> updateProduct(@Valid @RequestBody UpdateProductDTO updateProductDTO, @PathVariable Long id) {
         return productService.updateProduct(updateProductDTO, id);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Product> deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
         return productService.deleteProduct(id);
     }
 }

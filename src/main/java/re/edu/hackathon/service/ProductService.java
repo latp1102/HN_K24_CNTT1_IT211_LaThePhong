@@ -14,7 +14,7 @@ import re.edu.hackathon.repository.ProductRepository;
 public class ProductService {
     @Autowired
     private ProductRepository productRepository;
-    public ResponseEntity<Product> getAll(Long id) {
+    public ResponseEntity<?> getAll(Long id) {
         Product product = productRepository.findById(id).orElse(null);
         return ResponseEntity.ok(product);
 
@@ -22,7 +22,7 @@ public class ProductService {
     public Product findById(Long id) {
         return productRepository.findById(id).orElseThrow(() -> new NotFoundException("sản phẩm không tồn tại"));
     }
-    public ResponseEntity<Product> addProduct(CreateProductDTO createProductDTO) {
+    public ResponseEntity<?> addProduct(CreateProductDTO createProductDTO) {
         Product product = Product.builder()
                 .code(createProductDTO.getCode())
                 .name(createProductDTO.getName())
@@ -36,7 +36,7 @@ public class ProductService {
         return new ResponseEntity<>(productRepository.save(product), HttpStatus.CREATED);
     }
 
-    public ResponseEntity<Product> updateProduct(UpdateProductDTO updateProductDTO, Long id){
+    public ResponseEntity<?> updateProduct(UpdateProductDTO updateProductDTO, Long id){
         Product product = findById(id);
         product.setCode(updateProductDTO.getCode());
         product.setName(updateProductDTO.getName());
@@ -49,9 +49,32 @@ public class ProductService {
         product.setStatus(updateProductDTO.getStatus());
         return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
     }
-    public ResponseEntity<Product> deleteProduct(Long id) {
+    public ResponseEntity<?> updateProductById(Long id, UpdateProductDTO updateProductDTO){
+        Product product = findById(id);
+        if(updateProductDTO.getName() != null){
+            updateProductDTO.setName(updateProductDTO.getName());
+        }
+        if(updateProductDTO.getCode() != null){
+            updateProductDTO.setCode(updateProductDTO.getCode());
+        }
+        if(updateProductDTO.getCategory() != null){
+            updateProductDTO.setCategory(updateProductDTO.getCategory());
+        }
+        if(updateProductDTO.getDescription() != null){
+            updateProductDTO.setDescription(updateProductDTO.getDescription());
+        }
+        if(updateProductDTO.getSku() != null){
+            updateProductDTO.setSku(updateProductDTO.getSku());
+        }
+        if(updateProductDTO.getPrice() != null){
+            updateProductDTO.setPrice(updateProductDTO.getPrice());
+        }
+        return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+    }
+    public ResponseEntity<?> deleteProduct(Long id) {
         Product product = findById(id);
         productRepository.delete(product);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }
