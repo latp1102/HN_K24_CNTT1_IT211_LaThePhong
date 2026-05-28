@@ -2,6 +2,7 @@ package re.edu.hackathon.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import re.edu.hackathon.common.Status;
 
 @Entity
 @NoArgsConstructor
@@ -23,5 +24,6 @@ public class Product {
     private String category;
     private String weight;
     private String image;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 }

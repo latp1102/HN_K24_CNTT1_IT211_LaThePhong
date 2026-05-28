@@ -1,9 +1,12 @@
 package re.edu.hackathon.dto.request;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import re.edu.hackathon.common.Status;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,6 +31,7 @@ public class UpdateProductDTO {
     private String category;
     @NotBlank(message = "cân nặng không được để trống")
     private String weight;
-    @NotBlank(message = "trạng thái không được để trống")
-    private String status;
+    @NotNull(message = "trạng thái không được để trống")
+    @Enumerated(EnumType.STRING)
+    private Status status;
 }
